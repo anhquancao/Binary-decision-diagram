@@ -6,7 +6,33 @@
 #define PROJECT_S1_TREE_H
 
 
+#include "Node.h"
+
+
 class Tree {
+public:
+    Tree();
+
+    Tree(Node *root, int nbOfNode);
+
+    ~Tree();
+
+    Node *getRoot() const;
+
+    void setRoot(Node *root);
+
+    int getNbOfNode() const;
+
+    void setNbOfNode(int nbOfNode);
+
+    void insertNode();
+
+    void deleteNode();
+
+    bool search(int a);
+private:
+    Node *root;
+    int nbOfNode;
 
 };
 

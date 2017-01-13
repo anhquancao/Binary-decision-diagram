@@ -7,7 +7,32 @@
 
 
 class Node {
+    int data;
+    Node *leftNode;
+    Node *rightNode;
 
+    //Constructor
+    Node();
+
+    Node(int data);
+
+    //Destructor
+    ~Node();
+
+    //Getter
+
+    int getData();
+
+    Node *getLeftNode() const;
+
+    Node *getRightNode() const;
+
+    // Setter
+    void setData(int data);
+
+    void setLeftNode(Node &node);
+
+    void setRightNode(Node &node);
 };
 
 
