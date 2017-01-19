@@ -7,10 +7,11 @@
 
 
 class Node {
+private:
     int data;
     Node *leftNode;
     Node *rightNode;
-
+public:
     //Constructor
     Node();
 

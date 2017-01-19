@@ -25,9 +25,9 @@ public:
 
     void setNbOfNode(int nbOfNode);
 
-    void insertNode();
+    void insertNode(int data);
 
-    void deleteNode();
+    void deleteNode(Node node);
 
     bool search(int a);
 private:
