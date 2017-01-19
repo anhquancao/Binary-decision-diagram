@@ -5,7 +5,7 @@
 #include "Tree.h"
 
 Tree::Tree() {
-    
+
 }
 
 Tree::Tree(Node *root, int nbOfNode) : root(root), nbOfNode(nbOfNode) {}
