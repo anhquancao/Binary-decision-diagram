@@ -7,7 +7,11 @@
 
 
 #include "Node.h"
+#include <iostream>
+#include <string.h>
+#include <iomanip>
 
+using namespace std;
 
 class Tree {
 public:
@@ -25,11 +29,14 @@ public:
 
     void setNbOfNode(int nbOfNode);
 
-    void insertNode();
+    void insertNode(int data);
 
     void deleteNode();
 
     bool search(int a);
+
+    void show();
+
 private:
     Node *root;
     int nbOfNode;

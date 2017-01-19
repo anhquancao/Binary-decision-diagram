@@ -7,14 +7,18 @@
 
 
 class Node {
+
     int data;
     Node *leftNode;
     Node *rightNode;
 
+public:
     //Constructor
     Node();
 
     Node(int data);
+
+    Node(int data, Node *leftNode, Node *rightNode);
 
     //Destructor
     ~Node();
@@ -23,16 +27,16 @@ class Node {
 
     int getData();
 
-    Node *getLeftNode() const;
+    Node * getLeftNode();
 
-    Node *getRightNode() const;
+    Node * getRightNode();
 
     // Setter
     void setData(int data);
 
-    void setLeftNode(Node &node);
+    void setLeftNode(Node *node);
 
-    void setRightNode(Node &node);
+    void setRightNode(Node *node);
 };
 
 
