@@ -40,6 +40,7 @@ void Tree::setNbOfNode(int nbOfNode) {
     Tree::nbOfNode = nbOfNode;
 }
 
+
 /**
  * Recursive insert node function
  * @param root
@@ -78,8 +79,37 @@ void Tree::deleteNode() {
 
 }
 
+bool recSearch(int a, Node *node) {
+    bool result = false;
+    Node *currentNode = node;
+    if (currentNode->getData() == a) {
+        result = true;
+    } else {
+        if (a > currentNode->getData()) {
+            if (currentNode->getRightNode() != nullptr) {
+                currentNode = currentNode->getRightNode();
+                result = recSearch(a, currentNode);
+            } else {
+                return false;
+            }
+        } else {
+            if (currentNode->getLeftNode() != nullptr) {
+                currentNode = currentNode->getLeftNode();
+                result = recSearch(a, currentNode);
+            } else {
+                return false;
+            }
+        }
+    }
+
+    return result;
+}
+
 bool Tree::search(int a) {
-    return false;
+    bool result = false;
+    Node *currentNode = this->getRoot();
+    recSearch(a, currentNode);
+    return result;
 }
 
 

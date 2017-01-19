@@ -12,6 +12,7 @@ class Node {
     Node *leftNode;
     Node *rightNode;
 
+
 public:
     //Constructor
     Node();

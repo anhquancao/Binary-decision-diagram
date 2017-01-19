@@ -31,7 +31,7 @@ public:
 
     void insertNode(int data);
 
-    void deleteNode();
+    void deleteNode(Node node);
 
     bool search(int a);
 
@@ -41,6 +41,7 @@ private:
     Node *root;
     int nbOfNode;
 
+    void deleteNode();
 };
 
 
