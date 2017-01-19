@@ -17,5 +17,8 @@ int main() {
     tree.insertNode(45);
 
     tree.show();
+
+
+    std::cout << tree.search(25);
     return 0;
 }

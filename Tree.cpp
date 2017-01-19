@@ -51,7 +51,7 @@ Node *recInsertNode(Node *root, int data) {
     if (root == NULL) {
         root = new Node(data, NULL, NULL);
     } else {
-        if (data < root->getData()) {
+        if (data <= root->getData()) {
             if (root->getLeftNode() == nullptr) {
                 root->setLeftNode(new Node(data, NULL, NULL));
             } else {
@@ -79,37 +79,34 @@ void Tree::deleteNode() {
 
 }
 
-bool recSearch(int a, Node *node) {
-    bool result = false;
+bool recSearch(int data, Node *node) {
     Node *currentNode = node;
-    if (currentNode->getData() == a) {
-        result = true;
+    if(currentNode == NULL){
+        return false;
     } else {
-        if (a > currentNode->getData()) {
-            if (currentNode->getRightNode() != nullptr) {
-                currentNode = currentNode->getRightNode();
-                result = recSearch(a, currentNode);
-            } else {
-                return false;
-            }
+        if (currentNode->getData() == data) {
+            return true;
         } else {
-            if (currentNode->getLeftNode() != nullptr) {
-                currentNode = currentNode->getLeftNode();
-                result = recSearch(a, currentNode);
+            if (data > currentNode->getData()) {
+                if (currentNode->getRightNode() != NULL) {
+                    return recSearch(data, currentNode->getRightNode());
+                } else {
+                    return false;
+                }
             } else {
-                return false;
+                if (currentNode->getLeftNode() != NULL) {
+                    return recSearch(data, currentNode->getLeftNode());
+                } else {
+                     return false;
+                }
             }
         }
     }
-
-    return result;
 }
 
-bool Tree::search(int a) {
-    bool result = false;
+bool Tree::search(int data) {
     Node *currentNode = this->getRoot();
-    recSearch(a, currentNode);
-    return result;
+    return recSearch(data, currentNode);
 }
 
 
