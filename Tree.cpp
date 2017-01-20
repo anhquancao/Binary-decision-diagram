@@ -20,7 +20,7 @@ void clearTree(Node *node) {
 }
 
 Tree::~Tree() {
-    clearTree(this->root);
+//    clearTree(this->root);
 }
 
 
@@ -75,13 +75,93 @@ void Tree::insertNode(int data) {
 }
 
 
-void Tree::deleteNode() {
+void Tree::deleteNode(int data) {
+    Node *node = this->root;
+    Node *parentNode = NULL;
+    bool isLeft = false;
+    bool isRight = false;
+    while (true) {
+//        cout << node->getData() << " : " << data << endl;
+        if (node->getLeftNode() == NULL && node->getRightNode() == NULL) {
+            if (isLeft) {
+                parentNode->setLeftNode(NULL);
+            } else if (isRight) {
+                parentNode->setRightNode(NULL);
+            } else {
+                this->setRoot(NULL);
+            }
+            delete node;
+            break;
+        } else {
+            if (data > node->getData()) {
+                if (node->getRightNode() != NULL) {
+                    parentNode = node;
+                    node = node->getRightNode();
+                    isRight = true;
+                    continue;
+                } else {
+                    cout << "Value not in tree";
+                    break;
+                }
+            } else if (data < node->getData()) {
+                if (node->getLeftNode() != NULL) {
+                    parentNode = node;
+                    node = node->getLeftNode();
+                    isLeft = true;
+                    continue;
+                } else {
+                    cout << "Value not in tree";
+                    break;
+                }
+            } else {
+                if (node->getLeftNode() != NULL && node->getRightNode() == NULL ||
+                    node->getLeftNode() == NULL && node->getRightNode() != NULL) {
+                    if (node->getLeftNode() != NULL) {
+                        if (isLeft) {
+                            parentNode->setLeftNode(node->getLeftNode());
+                        }
+                        if (isRight) {
+                            parentNode->setRightNode(node->getLeftNode());
+                        }
 
+                    }
+                    if (node->getRightNode() != NULL) {
+                        if (isLeft) {
+                            parentNode->setLeftNode(node->getRightNode());
+                        }
+                        if (isRight) {
+                            parentNode->setRightNode(node->getRightNode());
+                        }
+                    }
+                    delete node;
+                    break;
+                } else {
+                    Node *min = node->getRightNode();
+                    Node *parentMinNode = node;
+                    bool isRight = true;
+                    while (min->getLeftNode() != NULL) {
+                        isRight = false;
+                        parentMinNode = min;
+                        min = min->getLeftNode();
+                    }
+                    if (isRight){
+                        parentMinNode->setRightNode(min->getRightNode());
+                    }else{
+                        parentMinNode->setLeftNode(min->getRightNode());
+                    }
+                    node->setData(min->getData());
+                    delete min;
+                    break;
+                }
+            }
+        }
+
+    }
 }
 
 bool recSearch(int data, Node *node) {
     Node *currentNode = node;
-    if(currentNode == NULL){
+    if (currentNode == NULL) {
         return false;
     } else {
         if (currentNode->getData() == data) {
@@ -97,7 +177,7 @@ bool recSearch(int data, Node *node) {
                 if (currentNode->getLeftNode() != NULL) {
                     return recSearch(data, currentNode->getLeftNode());
                 } else {
-                     return false;
+                    return false;
                 }
             }
         }
