@@ -4,7 +4,7 @@
 
 #include "BDD.h"
 
-unsigned int BDD::nodeHash(int var, BDD *high, BDD *low) {
+unsigned int BDD::nodeHash(int var, BDD *low, BDD *high) {
     return BDD::triple((unsigned int) var, (unsigned int) high, (unsigned int) low) % BDD_NODE_SIZE;
 }
 
@@ -45,5 +45,19 @@ BDD *BDD::makeNode(int var, BDD *low, BDD *high) {
 
 bool BDD::sameAs(int var, BDD *newLow, BDD *newHigh) {
     return this->index == var && this->low == newLow && this->high == newHigh;
+}
+
+BDD *BDD::restrict(BDD *subTree, int var, bool val) {
+    if (subTree->index > var) {
+        return subTree;
+    } else if (subTree->index < var) {
+        return BDD::makeNode(subTree->index,
+                             BDD::restrict(subTree->high, var, val),
+                             BDD::restrict(subTree->low, var, val));
+    }
+}
+
+BDD *BDD::ITE(BDD *I, BDD *T, BDD *E) {
+    
 }
 

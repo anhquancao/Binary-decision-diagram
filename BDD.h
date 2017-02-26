@@ -5,6 +5,8 @@
 #ifndef PROJECT_S1_BDD_H
 #define PROJECT_S1_BDD_H
 
+#include <cstdlib>
+
 class BDD {
 private:
 
@@ -20,20 +22,26 @@ public:
     BDD *next; // point to the NEXT BDD in the bucket
 
     static unsigned int BDD_NODE_SIZE = 1000;
-    static BDD **BDDTable;
+    static BDD **BDDTable = (BDD **) calloc(BDD_NODE_SIZE, sizeof(BDD *));
+
+    static int numVars = 0;
+
 
     BDD(int var, BDD *low, BDD *high);
 
 
-    static unsigned int nodeHash(int var, BDD *high, BDD *low);
+    static unsigned int nodeHash(int var, BDD *low, BDD *high);
+
+    static unsigned int numvars = 0;
 
     static BDD *makeNode(int var, BDD *low, BDD *high);
 
-    static BDD* BDDIthVar(int i){
+    static BDD *restrict(BDD *subTree, int var, bool val);
 
-    }
+    static BDD *ITE(BDD *I, BDD *T, BDD *E);
 
     bool sameAs(int var, BDD *newLow, BDD *newHigh);
+
 };
 
 
