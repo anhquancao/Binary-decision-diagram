@@ -52,12 +52,47 @@ BDD *BDD::restrict(BDD *subTree, int var, bool val) {
         return subTree;
     } else if (subTree->index < var) {
         return BDD::makeNode(subTree->index,
-                             BDD::restrict(subTree->high, var, val),
-                             BDD::restrict(subTree->low, var, val));
+                             BDD::restrict(subTree->low, var, val),
+                             BDD::restrict(subTree->high, var, val));
+    } else {
+        if (val) {
+            return BDD::restrict(subTree->high, var, val);
+        } else {
+            return BDD::restrict(subTree->low, var, val);
+        };
     }
 }
 
-BDD *BDD::ITE(BDD *I, BDD *T, BDD *E) {
-    
+BDD *BDD::ithVar(int i) {
+    numVars++;
+    BDDTable[0]->index = numVars;
+    BDDTable[1]->index = numVars;
+    return BDD::makeNode(i, BDDFalse(), BDDTrue());
 }
+
+BDD *BDD::ITE(BDD *I, BDD *T, BDD *E) {
+    if (I == BDD::BDDTrue()) return T;
+    if (I == BDD::BDDFalse()) return E;
+    if (T == E) return T;
+    if (T == BDDTrue() && E == BDDFalse()) return I;
+
+    int splitVar = I->index;
+    if (splitVar > T->index) { splitVar = T->index; }
+    if (splitVar > E->index) { splitVar = E->index; }
+
+    BDD *Ixt = BDD::restrict(I, splitVar, true);
+    BDD *Txt = BDD::restrict(T, splitVar, true);
+    BDD *Ext = BDD::restrict(E, splitVar, true);
+    BDD *posFtor = BDD::ITE(Ixt, Txt, Ext);
+
+    BDD *Ixf = BDD::restrict(I, splitVar, true);
+    BDD *Txf = BDD::restrict(T, splitVar, true);
+    BDD *Exf = BDD::restrict(E, splitVar, true);
+    BDD *negFtor = BDD::ITE(Ixf, Txf, Exf);
+
+    BDD *result = BDD::makeNode(splitVar, posFtor, negFtor);
+    return result;
+}
+
+
 

@@ -29,6 +29,19 @@ public:
 
     BDD(int var, BDD *low, BDD *high);
 
+    static BDD *BDDFalse() {
+        if (BDDTable[0] == 0) {
+            BDDTable[0] = new BDD(numVars + 1, NULL, NULL);
+        }
+        return BDDTable[0];
+    }
+
+    static BDD *BDDTrue() {
+        if (BDDTable[1] == 0) {
+            BDDTable[1] = new BDD(numVars + 1, NULL, NULL);
+        }
+        return BDDTable[1];
+    }
 
     static unsigned int nodeHash(int var, BDD *low, BDD *high);
 
@@ -37,6 +50,8 @@ public:
     static BDD *makeNode(int var, BDD *low, BDD *high);
 
     static BDD *restrict(BDD *subTree, int var, bool val);
+
+    static BDD *ithVar(int i);
 
     static BDD *ITE(BDD *I, BDD *T, BDD *E);
 
